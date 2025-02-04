@@ -63,6 +63,26 @@
     height: 48px;
 }
 
+.error_messages {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 80%;
+    max-width: 600px;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.error-message button {
+    margin-top: 10px;
+}
+
 .btn-square,
 .btn-sm-square,
 .btn-lg-square {
