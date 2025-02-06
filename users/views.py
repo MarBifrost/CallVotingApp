@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
+from django.views.generic import TemplateView
+
 from .forms import LoginForm
 
 
@@ -25,3 +27,5 @@ class CustomLogoutView(LogoutView):
     # def dispatch(self, request, *args, **kwargs):
     #     messages.success(request, "You have been logged out successfully.")
     #     return super().dispatch(request, *args, **kwargs)
+
+
