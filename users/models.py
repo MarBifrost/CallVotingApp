@@ -34,4 +34,4 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'username'
 
     def __str__(self):
-        return self.username
+        return f"{self.username}, {self.allowed_ip}"

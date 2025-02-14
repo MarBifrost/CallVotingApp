@@ -70,26 +70,8 @@
                         <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-line fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Calls for Today</p>
-                                <h6 class="mb-0">1234</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Total Calls for last seven days</p>
-                                <h6 class="mb-0">25234</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-line fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Calls for last 30 days</p>
-                                <h6 class="mb-0">1234</h6>
+                                <p class="mb-2">Total calls for Today:</p>
+                                    <h6 class="mb-0">{{ calls_count }}</h6>
                             </div>
                         </div>
                     </div>
@@ -108,8 +90,9 @@
                                 </h6>
                             </div>
                             <div class="d-flex mb-2">
-                                <input class="form-control bg-dark border-0" type="text" placeholder="Enter the number">
-                                <button type="button" class="btn btn-primary ms-2">show</button>
+                                <input class="form-control bg-dark border-0" type="text" placeholder="Enter the number" value="{{ called_number }}">
+{#                                <button type="submit" class="btn btn-primary ms-2" id="click">show</button>#}
+
                             </div>
                             <div id="calender"></div>
                             <a href="">Show Results</a>
@@ -121,10 +104,16 @@
                                 <h6 class="mb-0">Calls on the specific number</h6>
                             </div>
                             <div class="d-flex mb-2">
-                                <input class="form-control bg-dark border-0" type="text" placeholder="Enter the number">
-                                <button type="button" class="btn btn-primary ms-2">show</button>
+                                <form method="GET">
+                                    <div class="d-flex mb-2">
+                                        <input class="form-control bg-dark border-0" type="text" name="called_number" placeholder="Enter the number" value="{{ called_number }}">
+                                        <button type="submit" class="btn btn-primary ms-2">Show</button>
+                                    </div>
+                                </form>
                             </div>
-                            
+                            {% if called_number %}
+                                <h6 class="mb-0 result_show"> {{ called_number_count }}</h6>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

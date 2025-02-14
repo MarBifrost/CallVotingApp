@@ -50,4 +50,10 @@
 
     
 })(jQuery);
+//
+// document.getElementById('searchForm').addEventListener('submit', function () {
+//     setTimeout(function () {
+//         document.getElementById('calledNumberInput').value='';
+//     },100);
+// });
 
