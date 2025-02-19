@@ -15,8 +15,8 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
-    
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -24,6 +24,8 @@
     <!-- Libraries Stylesheet -->
     <link href="{% static "lib/owlcarousel/assets/owl.carousel.min.css" %}" rel="stylesheet">
     <link href="{% static "tempusdominus/css/tempusdominus-bootstrap-4.min.css" %}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/lightpick/css/lightpick.css">
+
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
@@ -83,19 +85,20 @@
                 <div class="row g-4">
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <div class="h-100 bg-secondary rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Calls on the specific number by exact date
-                                <br>
-                                <span style="font-size: 12px; opacity: 0.7;">Enter the number, choose desired date and shen push the button "show" to see the result</span>
-                                </h6>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <input class="form-control bg-dark border-0" type="text" placeholder="Enter the number" value="{{ called_number }}">
-{#                                <button type="submit" class="btn btn-primary ms-2" id="click">show</button>#}
-
-                            </div>
-                            <div id="calender"></div>
-                            <a href="">Show Results</a>
+                            <form method="GET" id="form1">
+                                <div class="calender_container">
+                                    <input type="text" id="start-date" name="start_date" value="{{ start_date | default:now_date }}"/>
+                                    <input type="text" id="end-date" name="end_date" value="{{ end_date | default:now_date }} "/>
+                                    <br><br>
+                                    <input class="form-control bg-dark border-0" type="text" name="called_number" placeholder="Enter the number" value="{{ called_number|default:'' }}">
+                                    <br>
+                                    <button type="submit" class="btn btn-primary ms-2">Show</button>
+                                </div>
+                            </form>
+                            <br>
+                            {% if start_date and end_date and called_number %}
+                                <h6 class="mb-0 result_show"> {{ count_by_date }}</h6>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
@@ -104,25 +107,43 @@
                                 <h6 class="mb-0">Calls on the specific number</h6>
                             </div>
                             <div class="d-flex mb-2">
-                                <form method="GET">
+                                <form method="GET" id="form2">
                                     <div class="d-flex mb-2">
-                                        <input class="form-control bg-dark border-0" type="text" name="called_number" placeholder="Enter the number" value="{{ called_number }}">
+                                        <input class="form-control bg-dark border-0" type="text" name="only_called_number" placeholder="Enter the number" value="{{ only_called_number|default:'' }}">
+                                        <br><br>
                                         <button type="submit" class="btn btn-primary ms-2">Show</button>
                                     </div>
                                 </form>
+
                             </div>
-                            {% if called_number %}
+                           {% if only_called_number %}
                                 <h6 class="mb-0 result_show"> {{ called_number_count }}</h6>
                             {% endif %}
                         </div>
                     </div>
                 </div>
+
             </div>
-       </div>
+
+        </div>
+        <div style="margin-top: 70px;">
+            {% if error_message %}
+                <p class="text-danger" style=" display: flex; justify-content: center; align-items: center; margin-left: -1670px;">{{ error_message }}</p>
+            {% endif %}
+            <a href="{% url 'calls:home' %}" style=" display: flex; justify-content: center; align-items: center; margin-left: -1670px; margin-top: 10px;">Refresh</a>
+
+        </div>
+
     </div>
+
+
+
+
             <!-- Widgets End -->
 
     <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightpick/lightpick.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static "lib/chart/chart.min.js" %}"></script>
@@ -135,6 +156,18 @@
 
     <!-- Template Javascript -->
     <script src="{% static "js/main.js" %}"></script>
+    <script>
+        var picker = new Lightpick({
+            field: document.getElementById('start-date'),
+            secondField: document.getElementById('end-date'),
+            singleDate: false,
+            format: 'YYYY-MM-DD',
+            onSelect: function(start, end){
+                console.log(start.format('Do MMMM YYYY') + ' to ' + (end ? end.format('Do MMMM YYYY') : '...'));
+            }
+        });
+
+    </script>
 </body>
 
 </html>

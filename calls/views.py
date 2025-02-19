@@ -1,3 +1,4 @@
+from dbm import error
 from django.http import Http404
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
@@ -18,39 +19,53 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         today = timezone.now().date()
-        call_date = today.strftime("%Y-%m-%d")
+        now_date = today.strftime("%Y-%m-%d")
 
         # Get the total number of calls for today
         calls_count = Call.objects.filter(date=today).count()
 
+
         # Get the called_number from the GET request (if provided)
         called_number = self.request.GET.get('called_number')
-        selected_date=self.request.GET.get('selected_date')
+        only_called_number=self.request.GET.get('only_called_number')
+
+
+
+        # selected_date=self.request.GET.get('selected_date')
         start_date=self.request.GET.get('start_date')
         end_date=self.request.GET.get('end_date')
 
-        called_number_count=None
-
-        # If a called_number is provided, filter and count its occurrences
-        if called_number:
-            queryset=Call.objects.filter(called_number=called_number)
-
-            if selected_date:
-                queryset=queryset.filter(date=selected_date)
-
-            if start_date and end_date:
-                queryset=queryset.filter(date__range=[start_date,end_date])
-
-            called_number_count=queryset.count()
+        called_number_count=0
+        count_by_date=0
+        error_message=""
 
 
+        if self.request.GET:
+            if called_number and start_date and end_date and called_number.isdigit():
+                queryset=Call.objects.filter(date__range=(start_date,end_date), called_number=called_number)
+                count_by_date=queryset.count()
 
-        context['calls_count'] = calls_count
-        context['called_number'] = called_number
-        context['called_number_count'] = called_number_count
-        context['selected_date'] = selected_date
-        context['start_date'] = start_date
-        context['end_date'] = end_date
+            elif only_called_number and only_called_number.isdigit():
+                queryset=Call.objects.filter(called_number=only_called_number)
+                called_number_count=queryset.count()
+
+            else:
+                error_message="Please enter a valid data."
+
+
+
+
+        context.update({
+            'calls_count': calls_count,
+            'called_number': called_number,
+            'called_number_count': called_number_count,
+            'start_date': start_date,
+            'end_date': end_date,
+            'count_by_date': count_by_date,
+            'only_called_number': only_called_number,
+            'now_date': now_date,
+            'error_message': error_message,
+        })
 
 
         return context
