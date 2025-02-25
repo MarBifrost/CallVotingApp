@@ -4,7 +4,8 @@ from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils import timezone
-from calls.models import Call
+from calls.models import CallsData
+
 
 
 class HomeView(TemplateView):
@@ -12,8 +13,13 @@ class HomeView(TemplateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        print(f"User authenticated? {request.user.is_authenticated}")  # Debugging
+        print(f"User: {request.user}")  # Debugging
+        print(f"User database: {request.user._state.db}")  # Debugging
+
         if not request.user.is_authenticated:
             raise Http404("You have to be logged in.")
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -21,8 +27,9 @@ class HomeView(TemplateView):
         today = timezone.now().date()
         now_date = today.strftime("%Y-%m-%d")
 
+
         # Get the total number of calls for today
-        calls_count = Call.objects.filter(date=today).count()
+        calls_count = CallsData.objects.filter(call_date=today).count()
 
 
         # Get the called_number from the GET request (if provided)
@@ -42,11 +49,11 @@ class HomeView(TemplateView):
 
         if self.request.GET:
             if called_number and start_date and end_date and called_number.isdigit():
-                queryset=Call.objects.filter(date__range=(start_date,end_date), called_number=called_number)
+                queryset=CallsData.objects.filter(call_date__range=(start_date,end_date), called_number=called_number)
                 count_by_date=queryset.count()
 
             elif only_called_number and only_called_number.isdigit():
-                queryset=Call.objects.filter(called_number=only_called_number)
+                queryset=CallsData.objects.filter(called_number=only_called_number)
                 called_number_count=queryset.count()
 
             else:
