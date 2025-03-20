@@ -77,7 +77,9 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 
 AUTHENTICATION_BACKENDS = [
     'users.auth_backend.CustomAuthBackend',  # Use custom authentication
-    'django.contrib.auth.backends.ModelBackend',  # Fallback
+    'django.contrib.auth.backends.ModelBackend',
+    'users.backends.IPAuthBackend',
+    # Fallback
 ]
 
 
