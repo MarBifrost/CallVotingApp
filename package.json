@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "lightpick": "^1.6.2"
+    "lightpick": "^1.6.2",
+    "litepicker": "^2.0.12"
   }
 }
