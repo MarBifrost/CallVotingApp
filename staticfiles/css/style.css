@@ -42,6 +42,10 @@
     align-items: center;
 }
 
+.refresh_button {
+    padding: 100px;
+}
+
 
 /*** Button ***/
 .btn {
@@ -61,6 +65,17 @@
 .btn-lg-square {
     width: 48px;
     height: 48px;
+}
+
+.calender_container {
+    max-width:500px;
+    margin: 0 auto;
+}
+
+input {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 18px;
 }
 
 .error_messages {
@@ -83,6 +98,7 @@
     margin-top: 10px;
 }
 
+
 .btn-square,
 .btn-sm-square,
 .btn-lg-square {
@@ -93,6 +109,7 @@
     font-weight: normal;
     border-radius: 50px;
 }
+
 
 
 /*** Layout ***/

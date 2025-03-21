@@ -11,6 +11,8 @@ from .forms import LoginForm
 
 # Create your views here.
 
+
+
 class CustomLoginView(LoginView):
     template_name = 'signin.html'
     form_class = LoginForm
@@ -26,12 +28,14 @@ class CustomLoginView(LoginView):
         # Authenticate using the custom backend
         user = authenticate(request=self.request, username=user.username, ip=client_ip)
 
-        if user is not None:
-            login(self.request, user)
-            return super().form_valid(form)
-        else:
-            messages.error(self.request, _('Access denied. You can only login from your authorized IP address.'))
-            return self.render_to_response(self.get_context_data(form=form))
+        return super().form_valid(form)
+
+        # if user is not None:
+        #     login(self.request, user)
+        #     return super().form_valid(form)
+        # else:
+        #     messages.error(self.request, _('Access denied. You can only login from your authorized IP address.'))
+        #     return self.render_to_response(self.get_context_data(form=form))
 
     def form_invalid(self, form):
         messages.error(self.request, _('Invalid username or password.'))

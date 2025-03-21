@@ -23,7 +23,7 @@
 
     <!-- Libraries Stylesheet -->
     <link href="{% static "lib/owlcarousel/assets/owl.carousel.min.css" %}" rel="stylesheet">
-    <link href="{% static "tempusdominus/css/tempusdominus-bootstrap-4.min.css" %}" rel="stylesheet" />
+    <link href="{% static "lib/tempusdominus/css/tempusdominus-bootstrap-4.csss" %}" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/lightpick/css/lightpick.css">
 
 
@@ -98,6 +98,8 @@
                             <br>
                             {% if start_date and end_date and called_number %}
                                 <h6 class="mb-0 result_show"> {{ count_by_date }}</h6>
+                                {% elif start_date and end_date %}
+                                <h6 class="mb-0 result_show"> {{ only_date }}</h6>
                             {% endif %}
                         </div>
                     </div>
@@ -130,7 +132,7 @@
             {% if error_message %}
                 <p class="text-danger" style=" display: flex; justify-content: center; align-items: center; margin-left: -1670px;">{{ error_message }}</p>
             {% endif %}
-            <a href="{% url 'calls:home' %}" style=" display: flex; justify-content: center; align-items: center; margin-left: -1670px; margin-top: 10px;">Refresh</a>
+            <a href="{% url 'calls:home' %}" style=" display: flex; justify-content: center; align-items: center; margin-left: -1670px; margin-top: 100px;">Refresh</a>
 
         </div>
 
@@ -142,10 +144,10 @@
             <!-- Widgets End -->
 
     <!-- JavaScript Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lightpick/lightpick.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/moment.min.js' %}"></script>
+    <script src="{% static 'js/lightpick.js' %}"></script>
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static "lib/chart/chart.min.js" %}"></script>
     <script src="{% static "lib/easing/easing.min.js" %}"></script>
     <script src="{% static "lib/waypoints/waypoints.min.js" %}"></script>

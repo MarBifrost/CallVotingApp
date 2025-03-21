@@ -38,11 +38,13 @@ class HomeView(TemplateView):
 
 
 
+
         # selected_date=self.request.GET.get('selected_date')
         start_date=self.request.GET.get('start_date')
         end_date=self.request.GET.get('end_date')
 
         called_number_count=0
+        only_date=0
         count_by_date=0
         error_message=""
 
@@ -51,6 +53,10 @@ class HomeView(TemplateView):
             if called_number and start_date and end_date and called_number.isdigit():
                 queryset=CallsData.objects.filter(call_date__range=(start_date,end_date), called_number=called_number)
                 count_by_date=queryset.count()
+
+            elif start_date and end_date:
+                queryset=CallsData.objects.filter(call_date__range=(start_date,end_date))
+                only_date=queryset.count()
 
             elif only_called_number and only_called_number.isdigit():
                 queryset=CallsData.objects.filter(called_number=only_called_number)
@@ -72,6 +78,7 @@ class HomeView(TemplateView):
             'only_called_number': only_called_number,
             'now_date': now_date,
             'error_message': error_message,
+            'only_date': only_date
         })
 
 
