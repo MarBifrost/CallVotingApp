@@ -97,10 +97,10 @@ AUTHENTICATION_BACKENDS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'asterisk',
-        'USER': 'root',
-        'PASSWORD': 'qwe123',
-        'HOST': '10.240.0.39',
+        'NAME': 'db_name',
+        'USER': 'username',
+        'PASSWORD': 'password',
+        'HOST': 'ip',
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
@@ -108,10 +108,10 @@ DATABASES = {
     },
     'auth_db': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'auth_db',
-        'USER': 'root',
-        'PASSWORD': 'qwe123',
-        'HOST': '10.240.0.39',
+        'NAME': 'auth_db_name',
+        'USER': 'username',
+        'PASSWORD': 'passwd',
+        'HOST': 'host_ip',
         'PORT': '3306',
     }
 }
